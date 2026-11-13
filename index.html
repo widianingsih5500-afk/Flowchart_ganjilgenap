@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flowchart Ganjil Genap - Estetik Sky Blue</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f0f9ff;        /* Biru langit sangat lembut */
+      --sky-light: #e0f2fe;      /* Warna isi kotak utama */
+      --sky-medium: #bae6fd;     /* Warna isi keputusan */
+      --sky-primary: #0284c7;    /* Warna garis & tombol */
+      --sky-dark: #0369a1;       /* Warna teks */
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      color: var(--sky-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .flowchart-container {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(186, 230, 253, 0.8);
+      border-radius: 28px;
+      padding: 40px 50px;
+      box-shadow: 0 20px 40px -15px rgba(2, 132, 199, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* Gaya Umum Kotak Flowchart */
+    .node {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+      padding: 14px 24px;
+      border: 2px solid var(--sky-primary);
+      background-color: var(--white);
+      color: var(--sky-dark);
+      box-shadow: 0 8px 16px -4px rgba(2, 132, 199, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .node:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px -4px rgba(2, 132, 199, 0.2);
+    }
+
+    /* 1. Terminator (Mulai & Selesai) */
+    .terminator {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      min-width: 150px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* 2. Input / Output (Jajar Genjang) */
+    .parallelogram {
+      background-color: var(--sky-light);
+      transform: skewX(-18deg);
+      border-radius: 8px;
+      min-width: 210px;
+    }
+    .parallelogram:hover {
+      transform: skewX(-18deg) translateY(-2px);
+    }
+    .parallelogram span {
+      transform: skewX(18deg); /* Meluruskan teks di dalam jajar genjang */
+      display: block;
+    }
+
+    /* 3. Proses (Persegi Panjang) */
+    .process {
+      background-color: var(--white);
+      border-radius: 14px;
+      max-width: 220px;
+    }
+
+    /* 4. Keputusan (Belah Ketupat) */
+    .decision-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .decision {
+      width: 105px;
+      height: 105px;
+      background-color: var(--sky-medium);
+      border: 2px solid var(--sky-primary);
+      border-radius: 14px;
+      transform: rotate(45deg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 16px -4px rgba(2, 132, 199, 0.15);
+    }
+
+    .decision span {
+      transform: rotate(-45deg);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      width: 110px;
+    }
+
+    /* Panah Penghubung Vertikal */
+    .arrow-down {
+      width: 2px;
+      height: 28px;
+      background-color: var(--sky-primary);
+      position: relative;
+    }
+    .arrow-down::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: -4px;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 7px solid var(--sky-primary);
+    }
+
+    /* Area Percabangan (Ya / Tidak) */
+    .branch-section {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .center-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .right-branch {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      left: calc(50% + 72px);
+      top: 58px;
+    }
+
+    .arrow-right {
+      width: 45px;
+      height: 2px;
+      background-color: var(--sky-primary);
+      position: relative;
+    }
+    .arrow-right::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -4px;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 7px solid var(--sky-primary);
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sky-primary);
+      background: var(--white);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .label-ya {
+      position: absolute;
+      top: -22px;
+      left: 10px;
+    }
+
+    .label-tidak {
+      margin: 4px 0;
+    }
+
+    /* Garis Kembali dari "Genap" ke jalur "Selesai" */
+    .return-line {
+      position: absolute;
+      top: 44px;
+      right: 55px;
+      width: 135px;
+      height: 112px;
+      border-right: 2px solid var(--sky-primary);
+      border-bottom: 2px solid var(--sky-primary);
+      border-bottom-right-radius: 12px;
+      pointer-events: none;
+    }
+    .return-line::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: -1px;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-right: 7px solid var(--sky-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="flowchart-container">
+    <!-- Mulai -->
+    <div class="node terminator">Mulai</div>
+    <div class="arrow-down"></div>
+
+    <!-- Input -->
+    <div class="node parallelogram">
+      <span>Masukan bilangan bulat</span>
+    </div>
+    <div class="arrow-down"></div>
+
+    <!-- Proses -->
+    <div class="node process">
+      Bilangan dibagi 2 dengan operasi sisa bagi
+    </div>
+    <div class="arrow-down"></div>
+
+    <!-- Keputusan & Percabangan -->
+    <div class="branch-section">
+      <div class="center-column">
+        <div class="decision-wrapper">
+          <div class="decision">
+            <span>? sisa bagi = 0</span>
+          </div>
+        </div>
+
+        <span class="label label-tidak">Tidak</span>
+        <div class="arrow-down" style="height: 20px;"></div>
+
+        <!-- Output Ganjil -->
+        <div class="node parallelogram" style="min-width: 130px;">
+          <span>Ganjil</span>
+        </div>
+        <div class="arrow-down" style="height: 45px;"></div>
+      </div>
+
+      <!-- Cabang Kanan (Ya -> Genap) -->
+      <div class="right-branch">
+        <div class="arrow-right">
+          <span class="label label-ya">Ya</span>
+        </div>
+        <div class="node parallelogram" style="min-width: 120px;">
+          <span>Genap</span>
+        </div>
+        <div class="return-line"></div>
+      </div>
+    </div>
+
+    <!-- Selesai -->
+    <div class="node terminator">Selesai</div>
+  </div>
+
+</body>
+</html>
